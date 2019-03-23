@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TeacherModule } from './teacher/teacher.module';
 import { CommonModule } from './common/common.module';
+import { EquipmentModule } from './equipment/equipment.module';
 
 @Module({
   controllers: [AppController],
   providers: [AppService],
-  imports: [TeacherModule, CommonModule],
+  imports: [CommonModule, EquipmentModule],
 })
 export class AppModule {}
