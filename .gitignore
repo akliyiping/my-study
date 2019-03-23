@@ -149,3 +149,5 @@ typings/
 !.vscode/extensions.json
 .idea
 *.iml
+dist
+yarn.lock
