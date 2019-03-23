@@ -1,5 +1,5 @@
 import {Global, MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
-import {CommonService} from './common.service';
+import {CommonService} from './service/common.service';
 import {LoggerMiddleware} from './middlewares/logger.middleware';
 import {HttpExceptionFilter} from './filter/HttpExceptionFilter';
 import {APP_FILTER, APP_PIPE} from '@nestjs/core';
@@ -19,7 +19,6 @@ export class CommonModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer
             .apply(LoggerMiddleware)
-            .with('a', 'b')
             .forRoutes('/*');
     }
 }

@@ -1,5 +1,5 @@
 import {Body, Controller, Get, HttpException, Post, UsePipes} from '@nestjs/common';
-import {TeacherDto} from '../common/dto/TeacherDto';
+import {TeacherDto} from './dto/TeacherDto';
 
 @Controller('teacher')
 export class TeacherController {
