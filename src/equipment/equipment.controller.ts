@@ -8,7 +8,7 @@ export class EquipmentController {
 
     @Get()
     async getHello() {
-        return this.equipmentService.snatchAllEquipment();
+        return await this.equipmentService.getAllEquipment();
     }
 
 }
