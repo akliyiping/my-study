@@ -6,6 +6,7 @@ import {HttpExceptionFilter} from './filter/HttpExceptionFilter';
 import {APP_FILTER, APP_PIPE} from '@nestjs/core';
 import {ValidationPipe} from './pipe/validation.pipe';
 import {join} from 'path';
+import {Equipment} from './entity/entities/Equipment';
 
 @Module({
     providers: [CommonService, {
@@ -15,8 +16,8 @@ import {join} from 'path';
         provide: APP_PIPE,
         useClass: ValidationPipe,
     }],
-    imports: [],
-    exports: [CommonService],
+    imports: [TypeOrmModule.forRoot()],
+    exports: [CommonService, TypeOrmModule],
 })
 export class CommonModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

@@ -1,49 +1,41 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { EquipmentService } from './equipment.service';
-import {Equipment} from '../common/entity/entities/Equipment';
-import {TypeOrmModule} from '@nestjs/typeorm';
+import {Test, TestingModule} from '@nestjs/testing';
+import {EquipmentService} from './equipment.service';
+import {CommonModule} from '../common/common.module';
 
 describe('EquipmentService', () => {
-  let service: EquipmentService;
+    let service: EquipmentService;
+    let pageEquipments;
+    beforeAll(async () => {
+        const module: TestingModule = await Test.createTestingModule({
+            imports: [CommonModule],
+            providers: [EquipmentService],
+        }).compile();
+        service = module.get<EquipmentService>(EquipmentService);
+    });
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRoot({
-        name: 'default',
-        type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: '1pppppp',
-        database: 'kings',
-        synchronize: false,
-        entities: [
-          '../common/entity/entities/*.ts',
-        ],
-      }), TypeOrmModule.forFeature([Equipment])],
-      providers: [EquipmentService],
-    }).compile();
+    it('should be true', async () => {
+        const length = await service.getAllEquipment();
+        expect(length);
+    });
+    it('should be defined', () => {
+        expect(service).toBeDefined();
+    });
 
-    service = module.get<EquipmentService>(EquipmentService);
-  });
+    it('抓取所有的装备', async () => {
+        pageEquipments = await service.snatchAllPageEquipment();
+        expect(pageEquipments[0].name).not.toBeNull();
+    });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+    it('生成装备实体entities', async () => {
+        const entities = await service.parsePageEquipmentToEntities(pageEquipments);
+        expect(entities.length).not.toBeNull();
+        expect(entities.length).toBeGreaterThan(5)
+        expect(entities[0].name).not.toBeNull();
+        expect(entities[0].label).not.toBeNull();
+        expect(entities[0].imageUrl).not.toBeNull();
+    });
 
-  it('should be return body', () => {
-    const actual = service.snatchAllEquipment();
-    expect(actual).not.toBeNull();
-  });
-
-  it('should be true', async () => {
-    const length = await service.parseEquipmentByHtml();
-    expect(length);
-  });
-  it('should be true', async () => {
-    const length = await service.getAllEquipment();
-    expect(length);
-  });
-
+    it('entities存入数据库', async () => {
+        const saveAllEquipment = await service.clearAndSaveAllEquipment();
+    });
 });

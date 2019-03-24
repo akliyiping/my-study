@@ -11,8 +11,7 @@ import {join} from "path";
 @Module({
   controllers: [AppController],
   providers: [AppService],
-  imports: [        CommonModule, EquipmentModule],
+  imports: [CommonModule, EquipmentModule],
 })
 export class AppModule {
-  constructor() {}
 }

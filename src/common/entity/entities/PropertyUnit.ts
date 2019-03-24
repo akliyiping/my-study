@@ -1,32 +1,43 @@
-import {BaseEntity, Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, RelationId} from 'typeorm';
-import {PropertyUnitPrice} from './PropertyUnitPrice';
+import {BaseEntity,Column,Entity,Index,JoinColumn,JoinTable,ManyToMany,ManyToOne,OneToMany,OneToOne,PrimaryColumn,PrimaryGeneratedColumn,RelationId} from "typeorm";
+import {EquipmentPropertyUnit} from "./EquipmentPropertyUnit";
+import {PropertyUnitPrice} from "./PropertyUnitPrice";
 
-@Entity('property_unit', {schema: 'kings' } )
-@Index('property_unit_label_uindex', ['label'], {unique: true})
+
+@Entity("property_unit",{schema:"kings" } )
+@Index("property_unit_label_uindex",["label",],{unique:true})
 export class PropertyUnit extends BaseEntity {
 
     @PrimaryGeneratedColumn({
-        type: 'bigint',
-        name: 'id',
+        type:"bigint", 
+        name:"id"
         })
-    id: string;
+    id:string;
+        
 
-    @Column('varchar', {
-        nullable: false,
+    @Column("varchar",{ 
+        nullable:false,
         unique: true,
-        length: 100,
-        name: 'label',
+        length:100,
+        name:"label"
         })
-    label: string;
+    label:string;
+        
 
-    @Column('varchar', {
-        nullable: true,
-        length: 100,
-        name: 'name',
+    @Column("varchar",{ 
+        nullable:true,
+        length:100,
+        name:"name"
         })
-    name: string | null;
+    name:string | null;
+        
 
-    @OneToMany(type => PropertyUnitPrice, property_unit_price => property_unit_price.unitLabel, { onDelete: 'NO ACTION' , onUpdate: 'NO ACTION' })
-    propertyUnitPrices: Promise<PropertyUnitPrice[]>;
+   
+    @OneToMany(type=>EquipmentPropertyUnit, equipment_property_unit=>equipment_property_unit.unitLabel,{ onDelete: 'NO ACTION' ,onUpdate: 'NO ACTION' })
+    equipmentPropertyUnits:Promise<EquipmentPropertyUnit[]>;
+    
 
+   
+    @OneToMany(type=>PropertyUnitPrice, property_unit_price=>property_unit_price.unitLabel,{ onDelete: 'NO ACTION' ,onUpdate: 'NO ACTION' })
+    propertyUnitPrices:Promise<PropertyUnitPrice[]>;
+    
 }
