@@ -40,6 +40,6 @@ describe('EquipmentService', () => {
     });
 
     it('属性值存入数据库', async () => {
-        const saveAllEquipment = await service.clearAndSaveAllEquipmentProperty_unit();
+        const saveAllEquipment = await service.clearAndSaveAllEquipmentPropertyUnit();
     });
 });

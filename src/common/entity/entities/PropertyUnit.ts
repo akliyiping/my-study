@@ -1,6 +1,5 @@
 import {BaseEntity,Column,Entity,Index,JoinColumn,JoinTable,ManyToMany,ManyToOne,OneToMany,OneToOne,PrimaryColumn,PrimaryGeneratedColumn,RelationId} from "typeorm";
 import {EquipmentPropertyUnit} from "./EquipmentPropertyUnit";
-import {PropertyUnitPrice} from "./PropertyUnitPrice";
 
 
 @Entity("property_unit",{schema:"kings" } )
@@ -31,13 +30,16 @@ export class PropertyUnit extends BaseEntity {
     name:string | null;
         
 
-   
-    @OneToMany(type=>EquipmentPropertyUnit, equipment_property_unit=>equipment_property_unit.unitLabel,{ onDelete: 'NO ACTION' ,onUpdate: 'NO ACTION' })
-    equipmentPropertyUnits:Promise<EquipmentPropertyUnit[]>;
-    
+    @Column("int",{ 
+        nullable:true,
+        default: () => "'0'",
+        name:"unique"
+        })
+    unique:number | null;
+        
 
    
-    @OneToMany(type=>PropertyUnitPrice, property_unit_price=>property_unit_price.unitLabel,{ onDelete: 'NO ACTION' ,onUpdate: 'NO ACTION' })
-    propertyUnitPrices:Promise<PropertyUnitPrice[]>;
+    @OneToMany(type=>EquipmentPropertyUnit, equipment_property_unit=>equipment_property_unit.unitLabel,{ onDelete: 'NO ACTION' ,onUpdate: 'NO ACTION' })
+    equipmentPropertyUnits:EquipmentPropertyUnit[];
     
 }

@@ -11,4 +11,8 @@ export class EquipmentController {
         return await this.equipmentService.clearAndSaveAllEquipment();
     }
 
+    @Get('getPremiumRate')
+    async getPremiumRate() {
+        return await this.equipmentService.getPremiumRate();
+    }
 }

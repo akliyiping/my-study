@@ -1,11 +1,12 @@
 import {HttpException, Injectable} from '@nestjs/common';
 import axios from 'axios';
-import {Connection, EntityManager, Repository, Transaction, TransactionRepository} from 'typeorm';
+import {Connection, EntityManager, In, Repository, Transaction, TransactionRepository} from 'typeorm';
 import {Equipment} from '../common/entity/entities/Equipment';
 import * as _ from 'lodash';
 import {transliterate as tr, slugify} from 'transliteration';
 import PageEquipment from './interface/PageEquipment';
 import {EquipmentPropertyUnit} from '../common/entity/entities/EquipmentPropertyUnit';
+import {PropertyUnit} from '../common/entity/entities/PropertyUnit';
 
 @Injectable()
 export class EquipmentService {
@@ -40,20 +41,6 @@ export class EquipmentService {
         return equipmentArr;
     }
 
-    async parsePageEquipmentToUnitEntities(allPageEquipment) {
-        const equipmentArr: Equipment[] = [];
-        allPageEquipment.forEach((item) => {
-            const equipment = new Equipment();
-            equipment.name = item.name;
-            equipment.label = slugify(equipment.name, {separator: '_'});
-            equipment.imageUrl = item.info.icon;
-            equipment.price = item.info.price;
-            equipment.category = item.category;
-            equipmentArr.push(equipment);
-        });
-        return equipmentArr;
-    }
-
     async getAllEquipment(): Promise<Equipment[]> {
         return this.connection.getRepository(Equipment).find({where: {id: 1}});
     }
@@ -66,11 +53,13 @@ export class EquipmentService {
         });
     }
 
-    async clearAndSaveAllEquipmentProperty_unit() {
-        const entities = await this.parsePageEquipmentToUnitEntities(await this.snatchAllPageEquipment());
-        await this.connection.transaction( async (entityManager) => {
-            await entityManager.clear(EquipmentPropertyUnit);
-            await entityManager.save(entities);
-        });
+    async getPremiumRate() {
+        const equipmentRepository = this.connection.getRepository(Equipment);
+        const equipment = await equipmentRepository.find(
+            {
+                relations: ['equipmentPropertyUnits'],
+            });
+
+        return equipment;
     }
 }

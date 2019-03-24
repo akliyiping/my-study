@@ -6,9 +6,8 @@
   "password": "1pppppp",
   "database": "kings",
   "synchronize": false,
-  "debug": true,
   "entities": [
     "./**/entity/entities/*.ts"
-  ]
-
+  ],
+  "logging": ["query", "error"]
 }

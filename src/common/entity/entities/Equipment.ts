@@ -6,20 +6,13 @@ import {EquipmentPropertyUnit} from "./EquipmentPropertyUnit";
 @Index("equipment_label_uindex",["label",],{unique:true})
 export class Equipment extends BaseEntity {
 
-    @PrimaryGeneratedColumn({
-        type:"bigint", 
-        name:"id"
-        })
-    id:string;
-        
-
     @Column("varchar",{ 
-        nullable:true,
-        unique: true,
+        nullable:false,
+        primary:true,
         length:100,
         name:"label"
         })
-    label:string | null;
+    label:string;
         
 
     @Column("varchar",{ 
@@ -56,6 +49,6 @@ export class Equipment extends BaseEntity {
 
    
     @OneToMany(type=>EquipmentPropertyUnit, equipment_property_unit=>equipment_property_unit.equipmentLabel,{ onDelete: 'NO ACTION' ,onUpdate: 'NO ACTION' })
-    equipmentPropertyUnits:Promise<EquipmentPropertyUnit[]>;
+    equipmentPropertyUnits:EquipmentPropertyUnit[];
     
 }

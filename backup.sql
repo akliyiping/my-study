@@ -31,7 +31,7 @@ CREATE TABLE `equipment` (
   `category` varchar(100) DEFAULT NULL COMMENT '装备类型',
   PRIMARY KEY (`id`),
   UNIQUE KEY `equipment_label_uindex` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,12 +55,13 @@ CREATE TABLE `equipment_property_unit` (
   `id` bigint(10) NOT NULL AUTO_INCREMENT,
   `equipment_label` varchar(100) DEFAULT NULL,
   `unit_label` varchar(100) DEFAULT NULL,
+  `size` bigint(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `equipment_property_unit_equipment_label_fk` (`equipment_label`),
   KEY `equipment_property_unit_property_unit_label_fk` (`unit_label`),
   CONSTRAINT `equipment_property_unit_equipment_label_fk` FOREIGN KEY (`equipment_label`) REFERENCES `equipment` (`label`),
   CONSTRAINT `equipment_property_unit_property_unit_label_fk` FOREIGN KEY (`unit_label`) REFERENCES `property_unit` (`label`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='装备属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='装备属性表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +70,7 @@ CREATE TABLE `equipment_property_unit` (
 
 LOCK TABLES `equipment_property_unit` WRITE;
 /*!40000 ALTER TABLE `equipment_property_unit` DISABLE KEYS */;
+INSERT INTO `equipment_property_unit` VALUES (1,'po_xiao','physical_attack',50),(2,'po_xiao','attack_speed_percentage',35),(3,'po_xiao','crit_rate_percentage',15),(4,'xian_zhe_zhi_shu','magic_attack',400),(5,'xian_zhe_zhi_shu','maximum_life',1400),(6,'po_jun','physical_attack',180),(8,'bo_xue_zhe_zhi_nu','magic_attack',240),(9,'chun_jing_cang_qiong','attack_speed_percentage',40),(10,'chun_jing_cang_qiong','crit_rate_percentage',20),(11,'bu_xiang_zheng_zhao','physical_defense',270),(12,'bu_xiang_zheng_zhao','maximum_life',1200),(13,'fu_wen_da_jian','magic_attack',100),(14,'fu_wen_da_jian','maximum_magic',400),(17,'mo_shi','physical_attack',60),(18,'mo_shi','attack_speed_percentage',30);
 /*!40000 ALTER TABLE `equipment_property_unit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,9 +85,10 @@ CREATE TABLE `property_unit` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `label` varchar(100) NOT NULL COMMENT '属性唯一标识',
   `name` varchar(100) DEFAULT NULL COMMENT '属性名称',
+  `unique` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `property_unit_label_uindex` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='属性表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +97,7 @@ CREATE TABLE `property_unit` (
 
 LOCK TABLES `property_unit` WRITE;
 /*!40000 ALTER TABLE `property_unit` DISABLE KEYS */;
-INSERT INTO `property_unit` VALUES (5,'physical_attack','物理攻击'),(6,'magic_attack','法术攻击'),(7,'attack_speed_percentage','攻击速度百分比'),(8,'crit_rate_percentage','暴击率百分比'),(9,'physical_blood_draw_percentage','物理吸血百分比'),(10,'cooling_shortening_percentage','冷却缩短百分比'),(11,'moving_speed','移动速度'),(12,'moving_speed_percentage','移动速度百分比'),(13,'spell_vampire_percentage','法术吸血百分比'),(14,'physical_penetration','物理穿透'),(15,'magic_penetration','法术穿透'),(16,'physical_defense','物理防御'),(17,'magic_defense','法术防御'),(18,'maximum_life','最大生命'),(19,'maximum_magic','最大法力'),(20,'return_blood','每5秒回血'),(21,'crit_effect','暴击效果'),(22,'return_magic','每5秒回蓝');
+INSERT INTO `property_unit` VALUES (5,'physical_attack','物理攻击',0),(6,'magic_attack','法术攻击',0),(7,'attack_speed_percentage','攻击速度百分比',0),(8,'crit_rate_percentage','暴击率百分比',0),(9,'physical_blood_draw_percentage','物理吸血百分比',0),(10,'cooling_shortening_percentage','冷却缩短百分比',0),(11,'moving_speed','移动速度',0),(12,'moving_speed_percentage','移动速度百分比',0),(13,'spell_vampire_percentage','法术吸血百分比',0),(14,'physical_penetration','物理穿透',0),(15,'magic_penetration','法术穿透',0),(16,'physical_defense','物理防御',0),(17,'magic_defense','法术防御',0),(18,'maximum_life','最大生命',0),(19,'maximum_magic','最大法力',0),(20,'return_blood','每5秒回血',0),(21,'crit_effect','暴击效果',0),(22,'return_magic','每5秒回蓝',0);
 /*!40000 ALTER TABLE `property_unit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,4 +137,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-24  8:40:56
+-- Dump completed on 2019-03-24 11:06:38

@@ -18,12 +18,19 @@ export class EquipmentPropertyUnit extends BaseEntity {
    
     @ManyToOne(type=>Equipment, equipment=>equipment.equipmentPropertyUnits,{ onDelete: 'NO ACTION',onUpdate: 'NO ACTION' })
     @JoinColumn({ name:'equipment_label'})
-    equipmentLabel:Promise<Equipment | null>;
+    equipmentLabel:Equipment | null;
 
 
    
     @ManyToOne(type=>PropertyUnit, property_unit=>property_unit.equipmentPropertyUnits,{ onDelete: 'NO ACTION',onUpdate: 'NO ACTION' })
     @JoinColumn({ name:'unit_label'})
-    unitLabel:Promise<PropertyUnit | null>;
+    unitLabel:PropertyUnit | null;
 
+
+    @Column("bigint",{ 
+        nullable:true,
+        name:"size"
+        })
+    size:string | null;
+        
 }
