@@ -14,6 +14,18 @@ export class EquipmentService {
     constructor(private readonly connection: Connection) {
     }
 
+    /*async snatchAllPageEquipment() {
+        let allEquipment: PageEquipment[] = [];
+        const equipReq = await axios({
+            method: 'get',
+            url: 'http://db.18183.com/api/equip/',
+        });
+        if (equipReq.data) {
+            const str = equipReq.data.toString().replace('var all_equip=', '');
+            allEquipment = _.values(JSON.parse(str));
+        }
+        return allEquipment;
+    }*/
     async snatchAllPageEquipment() {
         let allEquipment: PageEquipment[] = [];
         const equipReq = await axios({
@@ -26,7 +38,6 @@ export class EquipmentService {
         }
         return allEquipment;
     }
-
     async parsePageEquipmentToEntities(allPageEquipment) {
         const equipmentArr: Equipment[] = [];
         allPageEquipment.forEach((item) => {
@@ -47,19 +58,16 @@ export class EquipmentService {
 
     async clearAndSaveAllEquipment() {
         const entities = await this.parsePageEquipmentToEntities(await this.snatchAllPageEquipment());
-        await this.connection.transaction( async (entityManager) => {
+        await this.connection.transaction(async (entityManager) => {
             await entityManager.clear(Equipment);
             await entityManager.save(entities);
         });
     }
 
     async getPremiumRate() {
-        const equipmentRepository = this.connection.getRepository(Equipment);
-        const equipment = await equipmentRepository.find(
-            {
-                relations: ['equipmentPropertyUnits'],
-            });
-
+        const equipment = await this.connection.getRepository(Equipment).find({
+            relations: ['equipmentPropertyUnits'],
+        });
         return equipment;
     }
 }

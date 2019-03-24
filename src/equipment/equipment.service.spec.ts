@@ -29,17 +29,17 @@ describe('EquipmentService', () => {
     it('生成装备实体entities', async () => {
         const entities = await service.parsePageEquipmentToEntities(pageEquipments);
         expect(entities.length).not.toBeNull();
-        expect(entities.length).toBeGreaterThan(5)
+        expect(entities.length).toBeGreaterThan(5);
         expect(entities[0].name).not.toBeNull();
         expect(entities[0].label).not.toBeNull();
         expect(entities[0].imageUrl).not.toBeNull();
     });
 
     it('entities存入数据库', async () => {
-        // const saveAllEquipment = await service.clearAndSaveAllEquipment();
+        const saveAllEquipment = await service.clearAndSaveAllEquipment();
     });
 
     it('属性值存入数据库', async () => {
-        const saveAllEquipment = await service.clearAndSaveAllEquipmentPropertyUnit();
+        // const saveAllEquipment = await service.clearAndSaveAllEquipmentPropertyUnit();
     });
 });
