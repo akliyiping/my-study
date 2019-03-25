@@ -39,7 +39,7 @@ export class EquipmentService {
             equipment.name = item.zbzwm_00;
             equipment.label = slugify(equipment.name, {separator: '_'});
             equipment.imageUrl = `//game.gtimg.cn/images/yxzj/ingame/hero/equip/'${item.zbid_7c}'.png'`;
-            equipment.price = item.zbzj_26;
+            // equipment.price = item.zbzj_26;
             const info = await this.snatchPageEquipmentInfoById(item.zbid_7c);
             equipment.info = info;
             equipmentArr.push(equipment);
