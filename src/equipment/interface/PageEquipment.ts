@@ -1,32 +1,13 @@
 export default interface PageEquipment {
-    rune_id: string;
-    name: string;
-    category: string;
-    tier: string;
-    info: Info;
-}
-
-interface Info {
-    icon: string;
-    price: string;
-    detail: string;
-    parent_id: string;
-    child_id: string;
-    attribute: Attribute[];
-    effect: Effect[];
-    suit: string;
-}
-
-interface Effect {
-    name: string;
-    effect: string;
-    type: string;
-}
-
-interface Attribute {
-    attribute: string;
-    value: string;
-    unit: string;
-    type: string;
-    unique: string;
+    zbbq_8d: string;
+    // 主键id
+    zbid_7c: string;
+    // name
+    zbzwm_00: string;
+    zbfl_05: string;
+    zbsj_4a: string;
+    // price
+    zbzj_26: string;
+    zbsx_3f: string;
+    fszx_d6: string;
 }

@@ -6,6 +6,11 @@ export class EquipmentController {
     constructor(private readonly equipmentService: EquipmentService) {
     }
 
+    @Get()
+    async getAllEquipment() {
+        return await this.equipmentService.getAllEquipment();
+    }
+
     @Get('clearAndSaveAllEquipment')
     async clearAndSaveAllEquipment() {
         return await this.equipmentService.clearAndSaveAllEquipment();

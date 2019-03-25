@@ -14,52 +14,46 @@ export class EquipmentService {
     constructor(private readonly connection: Connection) {
     }
 
-    /*async snatchAllPageEquipment() {
-        let allEquipment: PageEquipment[] = [];
-        const equipReq = await axios({
-            method: 'get',
-            url: 'http://db.18183.com/api/equip/',
-        });
-        if (equipReq.data) {
-            const str = equipReq.data.toString().replace('var all_equip=', '');
-            allEquipment = _.values(JSON.parse(str));
-        }
-        return allEquipment;
-    }*/
     async snatchAllPageEquipment() {
-        let allEquipment: PageEquipment[] = [];
         const equipReq = await axios({
             method: 'get',
-            url: 'http://db.18183.com/api/equip/',
+            url: 'https://pvp.qq.com/zlkdatasys/item.json',
+            responseType: 'json',
         });
-        if (equipReq.data) {
-            const str = equipReq.data.toString().replace('var all_equip=', '');
-            allEquipment = _.values(JSON.parse(str));
-        }
-        return allEquipment;
+        return equipReq.data.zbsy_46;
     }
+
+    async snatchPageEquipmentInfoById(id) {
+        const equipReq = await axios({
+            method: 'get',
+            url: `https://pvp.qq.com/zlkdatasys/a20171010wsqzbzl/${id}.json`,
+            responseType: 'json',
+        });
+        return equipReq.data;
+    }
+
     async parsePageEquipmentToEntities(allPageEquipment) {
         const equipmentArr: Equipment[] = [];
-        allPageEquipment.forEach((item) => {
+        await Promise.all(allPageEquipment.map(async (item: PageEquipment) => {
             const equipment = new Equipment();
-            equipment.name = item.name;
+            equipment.name = item.zbzwm_00;
             equipment.label = slugify(equipment.name, {separator: '_'});
-            equipment.imageUrl = item.info.icon;
-            equipment.price = item.info.price;
-            equipment.category = item.category;
+            equipment.imageUrl = `//game.gtimg.cn/images/yxzj/ingame/hero/equip/'${item.zbid_7c}'.png'`;
+            equipment.price = item.zbzj_26;
+            const info = await this.snatchPageEquipmentInfoById(item.zbid_7c);
+            equipment.info = info;
             equipmentArr.push(equipment);
-        });
+        }));
         return equipmentArr;
     }
 
     async getAllEquipment(): Promise<Equipment[]> {
-        return this.connection.getRepository(Equipment).find({where: {id: 1}});
+        return this.connection.getRepository(Equipment).find();
     }
 
     async clearAndSaveAllEquipment() {
         const entities = await this.parsePageEquipmentToEntities(await this.snatchAllPageEquipment());
         await this.connection.transaction(async (entityManager) => {
-            await entityManager.clear(Equipment);
             await entityManager.save(entities);
         });
     }
