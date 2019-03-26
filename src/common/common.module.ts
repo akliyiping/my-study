@@ -3,10 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {CommonService} from './service/common.service';
 import {LoggerMiddleware} from './middlewares/logger.middleware';
 import {HttpExceptionFilter} from './filter/HttpExceptionFilter';
-import {APP_FILTER, APP_PIPE} from '@nestjs/core';
+import {APP_FILTER, APP_INTERCEPTOR, APP_PIPE} from '@nestjs/core';
 import {ValidationPipe} from './pipe/validation.pipe';
 import {join} from 'path';
 import {Equipment} from './entity/entities/Equipment';
+import {LoggerInterceptor} from './interceptor/logger.interceptor';
 
 @Module({
     providers: [CommonService, {
@@ -15,6 +16,9 @@ import {Equipment} from './entity/entities/Equipment';
     }, {
         provide: APP_PIPE,
         useClass: ValidationPipe,
+    }, {
+        provide: APP_INTERCEPTOR,
+        useClass: LoggerInterceptor,
     }],
     imports: [TypeOrmModule.forRoot()],
     exports: [CommonService, TypeOrmModule],
