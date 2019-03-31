@@ -30,8 +30,8 @@ CREATE TABLE `equipment` (
   `category` varchar(100) DEFAULT NULL COMMENT '装备类型',
   PRIMARY KEY (`label`),
   UNIQUE KEY `equipment_label_uindex` (`label`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+/*!40101  */;
 
 --
 -- Dumping data for table `equipment`
@@ -60,8 +60,8 @@ CREATE TABLE `equipment_property_unit` (
   KEY `equipment_property_unit_property_unit_label_fk` (`unit_label`),
   CONSTRAINT `equipment_property_unit_equipment_label_fk` FOREIGN KEY (`equipment_label`) REFERENCES `equipment` (`label`),
   CONSTRAINT `equipment_property_unit_property_unit_label_fk` FOREIGN KEY (`unit_label`) REFERENCES `property_unit` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='装备属性表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb4  COMMENT='装备属性表';
+/*!40101  */;
 
 --
 -- Dumping data for table `equipment_property_unit`
@@ -87,8 +87,8 @@ CREATE TABLE `property_unit` (
   `unique` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `property_unit_label_uindex` (`label`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='属性表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4  COMMENT='属性表';
+/*!40101  */;
 
 --
 -- Dumping data for table `property_unit`
@@ -111,8 +111,8 @@ CREATE TABLE `property_unit_price` (
   `unit_label` varchar(100) NOT NULL,
   `price` decimal(10,1) DEFAULT NULL,
   PRIMARY KEY (`unit_label`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='属性单价表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  COMMENT='属性单价表';
+/*!40101  */;
 
 --
 -- Dumping data for table `property_unit_price`
