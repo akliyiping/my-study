@@ -1,6 +1,7 @@
 import {Test, TestingModule} from '@nestjs/testing';
 import {EquipmentController} from './equipment.controller';
-import {EquipmentService} from './equipment.service';
+import {EquipmentSnatchService} from './service/equipment.snatch.service';
+import {EquipmentQueryService} from './service/equipment.query.service';
 import {CommonModule} from '../common/common.module';
 
 describe('Equipment Controller', () => {
@@ -10,10 +11,10 @@ describe('Equipment Controller', () => {
         const module: TestingModule = await Test.createTestingModule({
             imports: [CommonModule],
             controllers: [EquipmentController],
-            providers: [EquipmentService],
+            providers: [EquipmentSnatchService, EquipmentQueryService],
         }).compile();
 
-        controller = module.get<EquipmentController>(EquipmentController);
+        controller = module.get(EquipmentController);
     });
 
     it('should be defined', () => {

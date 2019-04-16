@@ -1,5 +1,5 @@
 import {Module} from '@nestjs/common';
-import {EquipmentService} from './equipment.service';
+import {EquipmentSnatchService} from './service/equipment.snatch.service';
 import {EquipmentController} from './equipment.controller';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {Equipment} from '../common/entity/entities/Equipment';
@@ -8,7 +8,7 @@ import {CommonModule} from '../common/common.module';
 
 @Module({
 imports: [CommonModule],
-providers: [EquipmentService],
+providers: [EquipmentSnatchService],
 controllers: [EquipmentController],
 })
 export class EquipmentModule {

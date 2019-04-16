@@ -16,13 +16,13 @@ export class EquipmentPropertyUnit extends BaseEntity {
         
 
    
-    @ManyToOne(type=>Equipment, equipment=>equipment.equipmentPropertyUnits,{ onDelete: 'NO ACTION',onUpdate: 'NO ACTION' })
+    @ManyToOne(type=>Equipment, equipment=>equipment.equipmentPropertyUnits,{ onDelete: 'RESTRICT',onUpdate: 'RESTRICT' })
     @JoinColumn({ name:'equipment_label'})
     equipmentLabel:Equipment | null;
 
 
    
-    @ManyToOne(type=>PropertyUnit, property_unit=>property_unit.equipmentPropertyUnits,{ onDelete: 'NO ACTION',onUpdate: 'NO ACTION' })
+    @ManyToOne(type=>PropertyUnit, property_unit=>property_unit.equipmentPropertyUnits,{ onDelete: 'RESTRICT',onUpdate: 'RESTRICT' })
     @JoinColumn({ name:'unit_label'})
     unitLabel:PropertyUnit | null;
 

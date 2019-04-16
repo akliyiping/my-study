@@ -39,7 +39,7 @@ export class PropertyUnit extends BaseEntity {
         
 
    
-    @OneToMany(type=>EquipmentPropertyUnit, equipment_property_unit=>equipment_property_unit.unitLabel,{ onDelete: 'NO ACTION' ,onUpdate: 'NO ACTION' })
+    @OneToMany(type=>EquipmentPropertyUnit, equipment_property_unit=>equipment_property_unit.unitLabel,{ onDelete: 'RESTRICT' ,onUpdate: 'RESTRICT' })
     equipmentPropertyUnits:EquipmentPropertyUnit[];
     
 }

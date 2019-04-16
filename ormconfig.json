@@ -5,6 +5,7 @@
   "username": "root",
   "password": "1pppppp",
   "database": "kings",
+  "insecureAuth": true,
   "synchronize": false,
   "entities": [
     "./**/entity/entities/*.ts"
