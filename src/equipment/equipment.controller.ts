@@ -1,6 +1,7 @@
-import {Controller, Get, Param, Request, Response} from '@nestjs/common';
+import {Controller, Get, Param, Request, Response, UsePipes} from '@nestjs/common';
 import {EquipmentSnatchService} from './service/equipment.snatch.service';
 import {EquipmentQueryService} from './service/equipment.query.service';
+import {ValidationPipe} from '../common/pipe/validation.pipe';
 
 @Controller('equipment')
 export class EquipmentController {
@@ -18,6 +19,12 @@ export class EquipmentController {
     @Get('getPremiumRate')
     async getPremiumRate() {
         return await this.equipmentQueryService.getPremiumRate();
+    }
+
+    @Get('getEquipmentCP')
+    @UsePipes(ValidationPipe)
+    async getEquipmentCP() {
+        return await this.equipmentQueryService.getEquipmentCP();
     }
 
     @Get(':id')

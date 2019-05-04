@@ -1,6 +1,6 @@
 import {ExecutionContext, Injectable, NestInterceptor} from '@nestjs/common';
 import {Observable, of} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
+import {catchError, tap, map} from 'rxjs/operators';
 
 @Injectable()
 export class LoggerInterceptor implements NestInterceptor {
@@ -8,9 +8,12 @@ export class LoggerInterceptor implements NestInterceptor {
         console.log('Before...');
         const now = Date.now();
         return call$.pipe(
-            tap(data => {
+            map(data => {
                 console.log(`After... ${Date.now() - now}ms`);
-                return data;
+                return {
+                    success: true,
+                    data,
+                };
             }),
             catchError(error => of(error)),
         );
